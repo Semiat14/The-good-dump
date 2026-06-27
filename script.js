@@ -11,7 +11,7 @@ moodButtons.forEach(button => {
 const saveBtn = document.getElementById('save-btn');
 const journalInput = document.getElementById('journal-input');
 
-saveBtn.addEventListener('click', () => {
+saveBtn.addEventListener('click', async () => { 
     const text = journalInput.value.trim();
 
     if (!selectedMood) {
@@ -40,14 +40,18 @@ saveBtn.addEventListener('click', () => {
     selectedMood = null;
     moodButtons.forEach(btn => btn.style.opacity = '1');
 });
-function saveEntry(entry) {
-    const entries = JSON.parse(localStorage.getItem('gooddump-entries') || '[]');
-    entries.unshift(entry);
-    localStorage.setItem('gooddump-entries', JSON.stringify(entries));
+
+async function saveEntry(entry) {
+    await fetch('http://localhost:3000/entries', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(entry)
+    });
     displayEntries();
 }
-function displayEntries() {
-    const entries = JSON.parse(localStorage.getItem('gooddump-entries') || '[]');
+async function displayEntries() {
+    const response = await fetch('http://localhost:3000/entries');
+    const entries = await response.json();
     const feed = document.getElementById('entries-feed');
     feed.innerHTML = '<h2>your past dumps</h2>';
 
