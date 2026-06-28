@@ -1,24 +1,37 @@
 const express = require('express');
 const cors = require('cors');
+const { MongoClient } = require('mongodb');
 
 const app = express();
 const PORT = 3000;
 
+const MONGO_URI = process.env.MONGO_URI; 
+const client = new MongoClient(MONGO_URI);
+
+let db;
+
+async function connectDB() {
+    await client.connect();
+    db = client.db('gooddump');
+    console.log('Connected to MongoDB!');
+}
+
 app.use(cors());
 app.use(express.json());
 
-let entries = [];
-
-app.get('/entries', (req, res) => {
+app.get('/entries', async (req, res) => {
+    const entries = await db.collection('entries').find().sort({ _id: -1 }).toArray();
     res.json(entries);
 });
 
-app.post('/entries', (req, res) => {
+app.post('/entries', async (req, res) => {
     const entry = req.body;
-    entries.unshift(entry);
+    await db.collection('entries').insertOne(entry);
     res.json({ message: 'entry saved!', entry });
 });
 
-app.listen(PORT, () => {
-    console.log(`The Good Dump backend running on port ${PORT}`);
+connectDB().then(() => {
+    app.listen(PORT, () => {
+        console.log(`The Good Dump backend running on port ${PORT}`);
+    });
 });
