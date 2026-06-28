@@ -201,3 +201,18 @@ body {
     cursor: pointer;
     text-decoration: underline;
 }
+#logout-btn {
+    background: none;
+    border: 1.5px solid #E8D5C4;
+    color: #9E7B7B;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-family: 'Georgia', serif;
+    font-size: 0.8rem;
+    cursor: pointer;
+    float: right;
+}
+
+#logout-btn:hover {
+    background-color: #E8D5C4;
+}

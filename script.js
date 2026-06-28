@@ -1,4 +1,8 @@
 if (!localStorage.getItem('token')) {
+    document.getElementById('logout-btn').addEventListener('click', () => {
+    localStorage.removeItem('token');
+    window.location.href = 'auth.html';
+});
     window.location.href = 'auth.html';
 }
 let selectedMood = null;
