@@ -1,10 +1,11 @@
 if (!localStorage.getItem('token')) {
-    document.getElementById('logout-btn').addEventListener('click', () => {
+    window.location.href = 'auth.html';
+}
+
+document.getElementById('logout-btn').addEventListener('click', () => {
     localStorage.removeItem('token');
     window.location.href = 'auth.html';
 });
-    window.location.href = 'auth.html';
-}
 let selectedMood = null;
 const moodButtons = document.querySelectorAll('.mood-btn');
 
