@@ -45,15 +45,23 @@ saveBtn.addEventListener('click', async () => {
 });
 
 async function saveEntry(entry) {
+    const token = localStorage.getItem('token');
     await fetch('https://the-good-dump.onrender.com/entries', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
         body: JSON.stringify(entry)
     });
     displayEntries();
 }
 async function displayEntries() {
-    const response = await fetch('https://the-good-dump.onrender.com/entries');
+    const token = localStorage.getItem('token');
+    const response = await fetch('https://the-good-dump.onrender.com/entries', {
+        headers: { 'Authorization': `Bearer ${token}` }
+    });
+
     const entries = await response.json();
     const feed = document.getElementById('entries-feed');
     feed.innerHTML = '<h2>your past dumps</h2>';

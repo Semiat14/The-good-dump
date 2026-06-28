@@ -41,15 +41,22 @@ app.post('/login', async (req, res) => {
     res.json({ token });
 });
 app.get('/entries', async (req, res) => {
-    const entries = await db.collection('entries').find().sort({ _id: -1 }).toArray();
+    const token = req.headers.authorization?.split(' ')[1];
+    if (!token) return res.status(401).json({ message: 'no token' });
+    const { userId } = jwt.verify(token, JWT_SECRET);
+    const entries = await db.collection('entries').find({ userId }).sort({ _id: -1 }).toArray();
     res.json(entries);
 });
 
 app.post('/entries', async (req, res) => {
-    const entry = req.body;
+    const token = req.headers.authorization?.split(' ')[1];
+    if (!token) return res.status(401).json({ message: 'no token' });
+    const { userId } = jwt.verify(token, JWT_SECRET);
+    const entry = { ...req.body, userId };
     await db.collection('entries').insertOne(entry);
     res.json({ message: 'entry saved!', entry });
 });
+
 
 connectDB().then(() => {
     app.listen(PORT, () => {
