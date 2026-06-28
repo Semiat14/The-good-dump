@@ -1,3 +1,6 @@
+if (!localStorage.getItem('token')) {
+    window.location.href = 'auth.html';
+}
 let selectedMood = null;
 const moodButtons = document.querySelectorAll('.mood-btn');
 
