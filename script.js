@@ -42,7 +42,7 @@ saveBtn.addEventListener('click', async () => {
 });
 
 async function saveEntry(entry) {
-    await fetch('http://localhost:3000/entries', {
+    await fetch('https://the-good-dump.onrender.com', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(entry)
@@ -50,7 +50,7 @@ async function saveEntry(entry) {
     displayEntries();
 }
 async function displayEntries() {
-    const response = await fetch('http://localhost:3000/entries');
+    const response = await fetch('https://the-good-dump.onrender.com');
     const entries = await response.json();
     const feed = document.getElementById('entries-feed');
     feed.innerHTML = '<h2>your past dumps</h2>';
