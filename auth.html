@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Good Dump</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="auth-container">
+    <h1>The Good Dump</h1>
+
+    <div id="login-form">
+        <h2>welcome back</h2>
+        <input type="email" id="login-email" placeholder="your email" />
+        <input type="password" id="login-password" placeholder="your password" />
+        <button id="login-btn">log in</button>
+        <p>don't have an account? <span id="show-signup">sign up</span></p>
+    </div>
+
+    <div id="signup-form" style="display:none;">
+        <h2>create your dump</h2>
+        <input type="email" id="signup-email" placeholder="your email" />
+        <input type="password" id="signup-password" placeholder="create a password" />
+        <button id="signup-btn">sign up</button>
+        <p>already have an account? <span id="show-login">log in</span></p>
+    </div>
+</div> 
+<script src="auth.js"></script>
+</body>
+</html>
